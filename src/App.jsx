@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute"; // ✅
+
 import Home from "./Pages/Home";
 import Mission from "./Pages/Mission";
 import Blog1 from "./Pages/Blog1";
@@ -25,7 +27,7 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
-  const hideLayoutRoutes = ["/login", "/signup"]; // 👈 Include /signup here
+  const hideLayoutRoutes = ["/login", "/signup"];
 
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname.toLowerCase());
 
@@ -34,18 +36,77 @@ function AppContent() {
       {!shouldHideLayout && <Navbar />}
 
       <Routes>
+        {/* ✅ Public route */}
         <Route path="/" element={<Home />} />
-        <Route path="/mission" element={<Mission />} />
-        <Route path="/blog1" element={<Blog1 />} />
-        <Route path="/ourheroes" element={<OurHeroes />} />
-        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/view/:slug" element={<View />} />
-        <Route path="/Blog" element={<Blog />} />
-        <Route path="/herodetails/:id" element={<HerosDetails />} />
-        <Route path="/UserProfileCard" element={< UserProfileCard/>} />
-        </Routes>
+
+        {/* 🔒 Protected Routes */}
+        <Route
+          path="/mission"
+          element={
+            <PrivateRoute>
+              <Mission />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/blog1"
+          element={
+            <PrivateRoute>
+              <Blog1 />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/ourheroes"
+          element={
+            <PrivateRoute>
+              <OurHeroes />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/aboutus"
+          element={
+            <PrivateRoute>
+              <AboutUs />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/view/:slug"
+          element={
+            <PrivateRoute>
+              <View />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <PrivateRoute>
+              <Blog />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/herodetails/:id"
+          element={
+            <PrivateRoute>
+              <HerosDetails />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/UserProfileCard"
+          element={
+            <PrivateRoute>
+              <UserProfileCard />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
 
       {!shouldHideLayout && <Footer />}
     </>
