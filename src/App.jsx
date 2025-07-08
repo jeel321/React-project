@@ -13,6 +13,7 @@ import SignUp from "./Pages/SignUp";
 import View from "./Pages/View";
 import Blog from "./Pages/Blog";
 import HerosDetails from "./Pages/HerosDetails";
+import UserProfileCard from "./Pages/UserProfileCard";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function AppContent() {
         <Route path="/view/:slug" element={<View />} />
         <Route path="/Blog" element={<Blog />} />
         <Route path="/herodetails/:id" element={<HerosDetails />} />
+        <Route path="/UserProfileCard" element={< UserProfileCard/>} />
         </Routes>
 
       {!shouldHideLayout && <Footer />}

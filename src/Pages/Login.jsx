@@ -28,11 +28,15 @@ const Login = () => {
       });
 
       const data = await response.json();
+      console.log('Login API Response:', data); // ✅ helpful for debugging
 
-      if (data.success && data.user?.username) {
+      if (data.success && data.user?._id) {
+        // ✅ Save tokens and user in localStorage
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
         localStorage.setItem('user', JSON.stringify(data.user));
+
+        console.log('Logged in user:', data.user);
         navigate('/');
       } else {
         setError(data.message || 'Invalid username or password.');
@@ -49,19 +53,12 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         {/* Logo and Title */}
         <div className="flex items-center justify-center mb-6 space-x-2">
-          <img
-            src={logo}
-            alt="Heroes Logo"
-            className="w-10 h-10 rounded-full"
-            loading="lazy"
-          />
+          <img src={logo} alt="Heroes Logo" className="w-10 h-10 rounded-full" loading="lazy" />
           <h1 className="text-2xl font-semibold text-blue-700">Heroes</h1>
         </div>
 
         {/* Welcome Title */}
-        <h2 className="text-2xl font-bold text-blue-700 text-center mb-6">
-          Welcome Back
-        </h2>
+        <h2 className="text-2xl font-bold text-blue-700 text-center mb-6">Welcome Back</h2>
 
         {/* Error Message */}
         {error && (
@@ -73,10 +70,7 @@ const Login = () => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
               Username
             </label>
             <input
@@ -93,10 +87,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -124,10 +115,7 @@ const Login = () => {
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don't have an account?{' '}
-          <Link
-            to="/signup"
-            className="text-blue-600 font-semibold hover:underline"
-          >
+          <Link to="/signup" className="text-blue-600 font-semibold hover:underline">
             Register
           </Link>
         </p>
